@@ -15,37 +15,39 @@ const ai = new GoogleGenAI({
 
 app.post("/generate", async (req, res) => {
   try {
-
     const notes = req.body.notes;
-
     const result = await ai.models.generateContent({
-
       model: "gemini-2.5-flash",
-
       contents: `
+      You are a friendly, engaging tutor creating a spoken audio lesson.
 
-Turn these notes into a clear study lesson. The lesson should be one that can be listened to by audio, so very interesting and engaging.
+      RULES:
+      - Do NOT use markdown (#, *, -, bullets, or symbols)
+      - Do NOT format text
+      - Write ONLY plain natural speech
+      - Use short sentences
+      - Explain like you're speaking to a student
+      - Add small pauses using commas and periods only
+      - Make it sound like a podcast explanation
 
-Notes:
+      Structure:
+      1. Simple introduction
+      2. Clear explanation
+      3. Example or analogy
+      4. Quick recap at the end
 
-${notes}
-
+      Notes:
+      ${notes}
       `
-
     });
 
     res.json({
-
       result: result.text
-
     });
 
   } catch (err) {
-
     console.error(err);
-
     res.status(500).json({ error: "AI failed" });
-
   }
 });
 
