@@ -16,33 +16,44 @@ const ai = new GoogleGenAI({
 app.post("/generate", async (req, res) => {
   try {
     const notes = req.body.notes;
+
     const result = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: `
-      You are a friendly, engaging tutor creating a spoken audio lesson.
+You are a podcast-style educational AI.
 
-      RULES:
-      - Do NOT use markdown (#, *, -, bullets, or symbols)
-      - Do NOT format text
-      - Write ONLY plain natural speech
-      - Use short sentences
-      - Explain like you're speaking to a student
-      - Add small pauses using commas and periods only
-      - Make it sound like a podcast explanation
+Return STRICTLY in this format:
 
-      Structure:
-      1. Simple introduction
-      2. Clear explanation
-      3. Example or analogy
-      4. Quick recap at the end
+TITLE: short engaging title
+LENGTH: estimated minutes (number only)
+TRANSCRIPT: clear spoken lesson (no markdown, no symbols, no formatting)
 
-      Notes:
-      ${notes}
+Rules:
+- Sound like a friendly teacher explaining aloud
+- Keep it structured: intro, explanation, example, recap
+- No emojis, no bullet points, no markdown
+
+Notes:
+${notes}
       `
     });
 
+    const text = result.text;
+
+    const title =
+      text.match(/TITLE:\s*(.*)/)?.[1]?.trim() || "Study Lesson";
+
+    const length =
+      text.match(/LENGTH:\s*(.*)/)?.[1]?.trim() || "5";
+
+    const transcript =
+      text.match(/TRANSCRIPT:\s*([\s\S]*)/)?.[1]?.trim() || text;
+
     res.json({
-      result: result.text
+      title,
+      length,
+      transcript,
+      cover: `https://picsum.photos/seed/${encodeURIComponent(title)}/500`
     });
 
   } catch (err) {
