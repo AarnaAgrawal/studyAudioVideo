@@ -1,161 +1,293 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>StudyCast</title>
-  <style>
-    body {
-    margin: 0;
-    font-family: system-ui, -apple-system, sans-serif;
-    background: radial-gradient(circle at top, #111827, #050814);
-    color: white;
-    overflow: hidden;
-    }
+<title>StudyCast</title>
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    /* subtle animated glow background */
-    body::before {
-    content: "";
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    background: rgba(59,130,246,0.25);
-    filter: blur(120px);
-    top: -100px;
-    left: -100px;
-    z-index: 0;
-    }
+body {
+  font-family: system-ui, sans-serif;
+  color: white;
+  min-height: 100vh;
 
-    .app {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    height: 100vh;
-    }
+  background:
+    radial-gradient(circle at 20% 20%, #ff7a1855 0%, transparent 35%),
+    radial-gradient(circle at 80% 30%, #af002d55 0%, transparent 40%),
+    radial-gradient(circle at 50% 80%, #1e3a8a55 0%, transparent 45%),
+    linear-gradient(135deg, #0b1020, #0f172a, #111827);
 
-    /* LEFT PANEL */
-    .left {
-    padding: 40px;
-    background: rgba(255,255,255,0.03);
-    border-right: 1px solid rgba(255,255,255,0.08);
-    backdrop-filter: blur(12px);
-    }
+  padding: 40px;
 
-    .left h2 {
-    font-size: 22px;
-    margin-bottom: 20px;
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
 
-    /* TEXTAREA */
-    textarea {
-    width: 100%;
-    height: 220px;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.08);
-    padding: 14px;
-    font-size: 14px;
-    background: rgba(0,0,0,0.3);
-    color: white;
-    outline: none;
-    transition: 0.2s;
-    }
+/* HERO */
 
-    textarea:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 20px rgba(59,130,246,0.3);
-    }
+.hero {
+  text-align: center;
+  max-width: 700px;
+}
 
-    /* BUTTON */
-    button {
-    margin-top: 12px;
-    width: 100%;
-    padding: 14px;
-    border-radius: 12px;
-    border: none;
-    background: linear-gradient(135deg, #3b82f6, #6366f1);
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
-    transform: translateY(0);
-    }
+.logo {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
 
-    button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(59,130,246,0.3);
-    }
+.hero h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #ff7a18, #ffb347, #af002d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-    /* STATUS TEXT */
-    #status {
-    margin-top: 10px;
-    font-size: 12px;
-    opacity: 0.6;
-    }
+.hero p {
+  opacity: 0.7;
+  margin-bottom: 20px;
+}
 
-    .right {
-    padding: 40px;
-    background: rgba(0,0,0,0.2);
+/* INPUT */
 
-    display: flex;
-    flex-direction: column;
-    height: 100vh;   /* IMPORTANT */
-    box-sizing: border-box;
-    }
+textarea {
+  width: 100%;
+  max-width: 600px;
+  height: 160px;
 
-    #output {
-    margin-top: 15px;
-    padding: 18px;
-    border-radius: 16px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.1);
 
-    flex: 1;              /* takes remaining space */
-    overflow-y: auto;     /* enables scroll */
-    line-height: 1.6;
-    white-space: pre-wrap;
-    }
+  background: rgba(255,255,255,0.05);
+  color: white;
 
-    .right h2 {
-    font-size: 22px;
-    }
+  padding: 16px;
+  font-size: 15px;
 
-    /* CONTROLS */
-    .controls {
-    display: flex;
-    gap: 10px;
-    margin-top: 12px;
-    }
+  outline: none;
 
-    .controls button {
-    width: 50%;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.1);
-    }
+  backdrop-filter: blur(10px);
+}
 
-    .controls button:hover {
-    background: rgba(59,130,246,0.2);
-    }
-  </style>
+textarea:focus {
+  border-color: #ff7a18;
+  box-shadow: 0 0 25px rgba(255,122,24,0.25);
+}
+
+/* BUTTON */
+
+button {
+  margin-top: 15px;
+
+  padding: 14px 20px;
+
+  border-radius: 999px;
+  border: none;
+
+  cursor: pointer;
+
+  font-weight: 600;
+  color: white;
+
+  background: linear-gradient(90deg, #ff7a18, #af002d);
+
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255,122,24,0.25);
+}
+
+/* COVER CARD */
+
+.cover-card {
+  width: 100%;
+  max-width: 600px;
+
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  padding: 16px;
+
+  border-radius: 20px;
+
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(15px);
+}
+
+.cover-card img {
+  width: 90px;
+  height: 90px;
+
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+.episode-info h2 {
+  font-size: 18px;
+}
+
+.episode-info p {
+  opacity: 0.6;
+  font-size: 13px;
+}
+
+/* PLAYER */
+
+.player {
+  display: flex;
+  gap: 20px;
+}
+
+.play-btn, .pause-btn {
+  width: 60px;
+  height: 60px;
+
+  border-radius: 50%;
+
+  font-size: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+
+  transition: 0.2s;
+}
+
+.play-btn:hover, .pause-btn:hover {
+  background: rgba(255,122,24,0.2);
+  transform: scale(1.05);
+}
+
+/* WAVEFORM */
+
+.waveform {
+  display: flex;
+  gap: 6px;
+}
+
+.waveform span {
+  width: 6px;
+  height: 25px;
+
+  border-radius: 10px;
+
+  background: linear-gradient(#ff7a18, #af002d);
+
+  animation: wave 1.2s infinite ease-in-out;
+}
+
+.waveform span:nth-child(2){animation-delay:.1s;}
+.waveform span:nth-child(3){animation-delay:.2s;}
+.waveform span:nth-child(4){animation-delay:.3s;}
+.waveform span:nth-child(5){animation-delay:.4s;}
+.waveform span:nth-child(6){animation-delay:.5s;}
+.waveform span:nth-child(7){animation-delay:.6s;}
+.waveform span:nth-child(8){animation-delay:.7s;}
+
+@keyframes wave {
+  50% {
+    transform: scaleY(2);
+  }
+}
+
+/* LESSON */
+
+.lesson {
+  width: 100%;
+  max-width: 700px;
+
+  padding: 20px;
+
+  border-radius: 20px;
+
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(15px);
+}
+
+.lesson h2 {
+  margin-bottom: 10px;
+}
+
+#output {
+  white-space: pre-wrap;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+</style>
 </head>
 
 <body>
-    <div class="app">
-      <!-- LEFT: INPUT -->
-      <div class="left">
-        <h2>🧠 Study Input</h2>
-        <textarea id="notesEnter" placeholder="Paste your notes here..."></textarea>
-        <button id="convert">Generate Lesson</button>
-        <p id="status"></p>
+<div class="hero">
+    <div class="logo">🎧</div>
+
+    <h1>Study Cast</h1>
+
+    <p>Turn notes into podcasts you can listen to anywhere.</p>
+
+    <textarea
+      id="notesEnter"
+      placeholder="Paste your notes here..."
+    ></textarea>
+
+    <button id="convert" type="button">
+      Generate Lesson
+    </button>
+
+    <p id="status"></p>
+</div>
+<div class="cover-card">
+    <img id="cover" src="https://picsum.photos/500" alt="cover art">
+    <div class="episode-info">
+        <h2 id="episodeTitle">
+          Your Lesson
+        </h2>
+        <p id="episodeLength">
+          ~5 min lesson
+        </p>
       </div>
-      <!-- RIGHT: OUTPUT -->
-      <div class="right">
-        <h2>🎧 AI Lesson</h2>
-        <div id="output">Your generated lesson will appear here...</div>
-        <div class="controls">
-          <button id="play">▶ Play</button>
-          <button id="stop">⏹ Stop</button>
-        </div>
-      </div>
+</div>
+<div class="player">
+    <button id="play" class="play-btn">
+      ▶
+    </button>
+    <button id="stop" class="pause-btn">
+      ⏸
+    </button>
+</div>
+<div class="waveform">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+<div class="lesson">
+    <h2>Transcript</h2>
+    <div id="output">
+      Your generated lesson will appear here...
     </div>
-    <script src="audio.js"></script>
-  </body>
+</div>
+
+<script src="audio.js"></script>
+
+</body>
 </html>
