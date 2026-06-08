@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>StudyCast Audio</title>
+<title>StudyCast Song</title>
 <style>
 * {
   box-sizing: border-box;
@@ -149,7 +149,7 @@ button:hover {
   gap: 20px;
 }
 
-.play-btn, .pause-btn, .download-btn {
+.play-btn, .pause-btn {
   width: 60px;
   height: 60px;
 
@@ -167,7 +167,7 @@ button:hover {
   transition: 0.2s;
 }
 
-.play-btn:hover, .pause-btn:hover, .download-btn:hover {
+.play-btn:hover, .pause-btn:hover {
   background: rgba(255,122,24,0.2);
   transform: scale(1.05);
 }
@@ -236,9 +236,9 @@ button:hover {
 <div class="hero">
     <div class="logo">🎧</div>
 
-    <h1>Study Cast Audio</h1>
+    <h1>Study Cast Song</h1>
 
-    <p>Turn notes into podcasts you can listen to anywhere.</p>
+    <p>Turn notes into catchy songs you can listen to anywhere.</p>
 
     <textarea
       id="notesEnter"
@@ -246,7 +246,7 @@ button:hover {
     ></textarea>
 
     <button id="convert" type="button">
-      Generate Lesson
+      Generate Song
     </button>
 
     <p id="status"></p>
@@ -269,9 +269,6 @@ button:hover {
     <button id="stop" class="pause-btn">
       ⏸
     </button>
-    <button id="download" class="download-btn">
-      ⬇
-    </button>
 </div>
 <div class="waveform">
     <span></span>
@@ -284,13 +281,13 @@ button:hover {
     <span></span>
 </div>
 <div class="lesson">
-    <h2>Transcript</h2>
+    <h2>Lyrics</h2>
     <div id="output">
-      Your generated lesson will appear here...
+      Your generated lyrics will appear here...
     </div>
 </div>
 
-<script src="audio.js"></script>
+<script src="song.js"></script>
 
 </body>
 </html>

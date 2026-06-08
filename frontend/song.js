@@ -2,6 +2,7 @@ let currentUtterance = null;
 let lastTranscript = "";
 let isPaused = false;
 
+// CLEAN TEXT
 function cleanText(text) {
   return text
     .replace(/[#*_`]/g, "")
@@ -11,20 +12,7 @@ function cleanText(text) {
     .trim();
 }
 
-function speak(text) {
-  speechSynthesis.cancel();
-
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.rate = 0.9;
-
-  utterance.onend = () => {
-    isPaused = false;
-  };
-
-  currentUtterance = utterance;
-  speechSynthesis.speak(utterance);
-}
-
+// GENERATE
 document.getElementById("convert").addEventListener("click", async () => {
   speechSynthesis.cancel();
 
@@ -44,6 +32,7 @@ document.getElementById("convert").addEventListener("click", async () => {
 
     status.textContent = "";
 
+    // UI updates
     document.getElementById("episodeTitle").textContent = data.title;
     document.getElementById("episodeLength").textContent = `${data.length} min lesson`;
     document.getElementById("cover").src = data.cover;
@@ -61,6 +50,8 @@ document.getElementById("convert").addEventListener("click", async () => {
   }
 });
 
+
+// ▶ PLAY / RESUME
 document.getElementById("play").addEventListener("click", () => {
   if (!lastTranscript) return;
 
@@ -75,6 +66,8 @@ document.getElementById("play").addEventListener("click", () => {
   }
 });
 
+
+// ⏸ STOP (pause)
 document.getElementById("stop").addEventListener("click", () => {
   if (speechSynthesis.speaking) {
     speechSynthesis.pause();
@@ -82,16 +75,17 @@ document.getElementById("stop").addEventListener("click", () => {
   }
 });
 
-document.getElementById("download").addEventListener("click", () => {
-  if (!lastTranscript) return;
 
-  const blob = new Blob([lastTranscript], { type: "text/plain" });
-  const url = URL.createObjectURL(blob);
+// SPEECH ENGINE
+function speak(text) {
+  speechSynthesis.cancel();
 
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "studycast-lesson.txt";
-  a.click();
+  currentUtterance = new SpeechSynthesisUtterance(text);
+  currentUtterance.rate = 0.95;
 
-  URL.revokeObjectURL(url);
-});
+  currentUtterance.onend = () => {
+    isPaused = false;
+  };
+
+  speechSynthesis.speak(currentUtterance);
+}
